@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
 import 'package:riverpod_flutter/pages/home_page.dart';
+import 'package:riverpod_flutter/services/http_services.dart';
 
-void main() {
+Future<void> main() async {
+  await _setUpServices();
   runApp(const ProviderScope(child: MyApp()));
+}
+
+Future<void> _setUpServices() async{
+  GetIt.instance.registerSingleton<HttpServices>(
+    HttpServices()
+  );
 }
 
 class MyApp extends StatelessWidget {
