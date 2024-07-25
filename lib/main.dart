@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:riverpod_flutter/pages/home_page.dart';
+import 'package:riverpod_flutter/services/database_service.dart';
 import 'package:riverpod_flutter/services/http_services.dart';
 
 Future<void> main() async {
@@ -12,6 +13,9 @@ Future<void> main() async {
 Future<void> _setUpServices() async{
   GetIt.instance.registerSingleton<HttpServices>(
     HttpServices()
+  );
+  GetIt.instance.registerSingleton<DatabaseService>(
+      DatabaseService()
   );
 }
 

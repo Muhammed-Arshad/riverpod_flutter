@@ -23,6 +23,7 @@ class HomePageController extends StateNotifier<HomePageData>{
 
   Future<void> loadData() async{
     if(state.data == null){
+
       Response? res = await _httpServices.get('https://pokeapi.co/api/v2/pokemon?limit=20&offset=0');
       if(res != null && res.data != null){
         PokemonListData data = PokemonListData.fromJson(res.data);
@@ -31,7 +32,23 @@ class HomePageController extends StateNotifier<HomePageData>{
 
       }
     }else{
+      if(state.data?.next != null){
+        Response? res = await _httpServices.get(
+            state.data!.next!
+        );
 
+        if(res != null && res.data != null){
+          PokemonListData data = PokemonListData.fromJson(res.data);
+          state = state.copyWith(
+              data: data.copyWith(
+                  results: [
+                    ...?state.data?.results,
+                    ...?data.results
+                  ]
+              )
+          );
+        }
+      }
     }
   }
 }
